@@ -63,7 +63,7 @@ const start = async () => {
     await mongoose.connect(process.env.MONGO_URI as string);
     // call the below function to dump all the data to mongo
     // I will try to provide my mongodb url
-    // await readAndDump()
+    // await readAndDump();
     console.log("connected to mongodb");
   } catch (err) {
     console.error(err);
