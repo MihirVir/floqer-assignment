@@ -14,5 +14,5 @@ const SalarySchema = new mongoose.Schema({
   company_size: String,
 });
 
-const Salary = mongoose.model("Salary", SalarySchema);
+const Salary = mongoose.model("Salary", SalarySchema, "salary");
 export default Salary;

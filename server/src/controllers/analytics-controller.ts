@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Salary from "../models/salaries-schema";
+import Salary from "../models/salary-schema";
 import { NotFoundError } from "../errors/not-found-error";
 
 type AggregateData = {
@@ -22,7 +22,10 @@ export const aggregateByYear = async (req: Request, res: Response) => {
     ]);
 
     res.send(aggregatedData);
-  } catch (err) {}
+  } catch (err) {
+    console.log("error", err);
+    res.status(500).send("Internal server error");
+  }
 };
 
 export const getAggregatedJobTitles = async (req: Request, res: Response) => {
