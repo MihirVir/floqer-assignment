@@ -3,6 +3,7 @@ import Header from "../components/header/header";
 import Table from "../components/table/Table";
 import { GroupByYearData, SelectedYearDataType } from "@/types/TableProps";
 import useFetch from "@/hooks/use-fetch";
+import LineChart from "@/components/chart/LineChart";
 
 const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(0);
@@ -23,23 +24,28 @@ const AnalyticsPage = () => {
 
   return (
     <>
-      <div className="p-2 text-black h-screen w-screen">
+      <div className="text-black h-screen w-screen">
         <Header />
-        <Table
-          heading_data={["year", "Total Jobs", "Average Salary"]}
-          data={data}
-          handleSelectedYear={handleSelectedYear}
-          selector={true}
-        />
-        {selectedYear >= 2020 && selectedYear <= 2024 && (
-          <>
+        <div className="w-full flex flex-row justify-around">
+          <div className="w-1/3">
             <Table
-              heading_data={["year", "totalJobs"]}
-              data={fetchedData}
-              selector={false}
+              heading_data={["year", "Total Jobs", "Average Salary"]}
+              data={data}
+              handleSelectedYear={handleSelectedYear}
+              selector={true}
             />
-          </>
-        )}
+            {selectedYear >= 2020 && selectedYear <= 2024 && (
+              <>
+                <Table
+                  heading_data={["Title", "Total Jobs"]}
+                  data={fetchedData}
+                  selector={false}
+                />
+              </>
+            )}
+          </div>
+          <LineChart data={data} />
+        </div>
       </div>
     </>
   );
