@@ -6,6 +6,9 @@ const Table: React.FC<Props> = ({
   data,
   handleSelectedYear,
   selector,
+  pagination,
+  handleNextPageChange,
+  handlePrevPageChange,
 }) => {
   return (
     <div className="my-6 w-full pl-4 overflow-y-auto">
@@ -45,6 +48,22 @@ const Table: React.FC<Props> = ({
           ))}
         </tbody>
       </table>
+      {pagination && (
+        <div className="mt-4 flex justify-end">
+          <button
+            onClick={handlePrevPageChange}
+            className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPageChange}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -7,6 +7,6 @@ import {
 const router = express.Router();
 
 router.get("/", aggregateByYear);
-router.get("/:year", getAggregatedJobTitles);
+router.get("/:year/:page", getAggregatedJobTitles);
 
 export { router as dashboardRouter };

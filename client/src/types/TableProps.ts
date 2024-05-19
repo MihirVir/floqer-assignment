@@ -9,6 +9,9 @@ export interface Props {
   data: GroupByYearData[] | SelectedYearDataType[];
   handleSelectedYear?: (year: GroupByYearData) => void;
   selector: boolean;
+  pagination: boolean;
+  handleNextPageChange?: () => void;
+  handlePrevPageChange?: () => void;
 }
 
 export type SelectedYearDataType = {

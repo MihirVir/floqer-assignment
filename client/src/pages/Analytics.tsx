@@ -7,12 +7,21 @@ import LineChart from "@/components/chart/LineChart";
 
 const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(1);
   const { data: fetchedData } = useFetch<SelectedYearDataType>(
-    `http://localhost:8000/${selectedYear}`,
+    `http://localhost:8000/${selectedYear}/${pageNumber}`,
   );
   const { data, loading, error } = useFetch<GroupByYearData>(
     "http://localhost:8000/",
   );
+
+  function handleNextPageChange() {
+    setPageNumber((prev) => prev + 1);
+  }
+
+  function handlePrevPageChange() {
+    setPageNumber((prev) => prev - 1);
+  }
 
   function handleSelectedYear(year: GroupByYearData) {
     console.log(year);
@@ -33,6 +42,7 @@ const AnalyticsPage = () => {
               data={data}
               handleSelectedYear={handleSelectedYear}
               selector={true}
+              pagination={false}
             />
             {selectedYear >= 2020 && selectedYear <= 2024 && (
               <>
@@ -40,6 +50,9 @@ const AnalyticsPage = () => {
                   heading_data={["Title", "Total Jobs"]}
                   data={fetchedData}
                   selector={false}
+                  pagination={true}
+                  handleNextPageChange={handleNextPageChange}
+                  handlePrevPageChange={handlePrevPageChange}
                 />
               </>
             )}
