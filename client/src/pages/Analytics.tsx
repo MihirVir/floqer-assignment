@@ -9,10 +9,10 @@ const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data: fetchedData } = useFetch<SelectedYearDataType>(
-    `http://localhost:8000/${selectedYear}/${pageNumber}`,
+    `https://floqer-assignment-1.onrender.com/${selectedYear}/${pageNumber}`,
   );
   const { data, loading, error } = useFetch<GroupByYearData>(
-    "http://localhost:8000/",
+    "https://floqer-assignment-1.onrender.com/",
   );
 
   function handleNextPageChange() {
@@ -24,8 +24,8 @@ const AnalyticsPage = () => {
   }
 
   function handleSelectedYear(year: GroupByYearData) {
-    console.log(year);
     setSelectedYear(year._id);
+    setPageNumber(1);
   }
 
   if (loading) return <h1> Loading </h1>;
@@ -38,7 +38,7 @@ const AnalyticsPage = () => {
         <div className="w-full flex flex-row justify-around">
           <div className="w-1/3">
             <Table
-              heading_data={["year", "Total Jobs", "Average Salary"]}
+              heading_data={["Year", "Total Jobs", "Average Salary"]}
               data={data}
               handleSelectedYear={handleSelectedYear}
               selector={true}
