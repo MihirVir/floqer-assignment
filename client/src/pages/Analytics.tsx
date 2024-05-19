@@ -1,10 +1,17 @@
 import Header from "../components/header/header";
-
+import Table from "../components/table/Table";
 const AnalyticsPage = () => {
   return (
     <>
-      <div className="bg-gradient-to-tl text-white from-slate-900 backdrop-blur-3xl from-75% to-slate-800 to-600% h-screen w-screen">
+      <div className="bg-black text-white h-screen w-screen">
         <Header />
+        <Table
+          heading_data={["year", "Total Jobs", "Average Salary"]}
+          data={[
+            { _id: 2020, totalJobs: 20, averageSalary: 4 },
+            { _id: 2021, totalJobs: 22, averageSalary: 4120 },
+          ]}
+        />
       </div>
     </>
   );
