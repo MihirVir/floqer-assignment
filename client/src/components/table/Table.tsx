@@ -49,16 +49,16 @@ const Table: React.FC<Props> = ({
         </tbody>
       </table>
       {pagination && (
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-center gap-2">
           <button
             onClick={handlePrevPageChange}
-            className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="mr-2 py-2 w-24  bg-slate-50 text-gray-600 border-2 border-black rounded-lg transition-all duration-150 disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-black hover:text-white"
           >
             Previous
           </button>
           <button
             onClick={handleNextPageChange}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="w-24  py-2 bg-slate-50 text-gray-600 border-2 border-black  rounded-lg transition-all duration-150 disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-black hover:text-white"
           >
             Next
           </button>
