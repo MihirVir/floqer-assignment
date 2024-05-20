@@ -6,7 +6,7 @@ import useFetch from "@/hooks/use-fetch";
 import LineChart from "@/components/chart/LineChart";
 
 const prodUrl = "https://floqer-assignment-1.onrender.com";
-const devUrl = "http://localhost:8000";
+// const devUrl = "http://localhost:8000";
 
 const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2020);
