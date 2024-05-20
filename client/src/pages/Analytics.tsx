@@ -43,7 +43,7 @@ const AnalyticsPage = () => {
 
   return (
     <>
-      <div className="text-black bg-black text-white h-screen w-screen">
+      <div className="bg-white text-black h-screen w-screen">
         <Header />
         <div className="w-full flex flex-row justify-around">
           <div className="w-1/3">
