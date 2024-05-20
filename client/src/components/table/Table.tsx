@@ -64,7 +64,7 @@ const Table: React.FC<Props> = ({
           {sortedData.map((item) => (
             <tr
               key={item._id}
-              className="m-0 border-t p-0 hover:bg-slate-900 cursor-pointer"
+              className="m-0 border-t p-0 hover:bg-slate-900 hover:text-white cursor-pointer"
             >
               {Object.values(item).map((i, index) => (
                 <td

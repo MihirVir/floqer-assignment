@@ -63,10 +63,6 @@ export const getAggregatedJobTitles = async (req: Request, res: Response) => {
       { $limit: PAGE_SIZE },
     ]);
 
-    if (jobTitles.length === 0) {
-      throw new NotFoundError();
-    }
-
     res.send([{ jobTitles, totalPages }]);
   } catch (err) {
     console.log("error", err);

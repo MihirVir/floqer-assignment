@@ -1,16 +1,21 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
+import { OpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import "express-async-errors";
 import { dashboardRouter } from "./routes";
 import { NotFoundError } from "./errors/not-found-error";
 import { errorHandler } from "./middlewares/error-handler";
 import cors from "cors";
+import { generateResponse } from "./controllers/chat-controller";
 import { json } from "body-parser";
 import mongoose from "mongoose";
 import fs from "fs";
 import path from "path";
 import csvParser from "csv-parser";
+import { Server as WebSocketServer } from "ws";
 import Salary from "./models/salary-schema";
 const app = express();
 
@@ -27,16 +32,51 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    console.log(process.env.MONGO_URI as string);
     await mongoose.connect(process.env.MONGO_URI as string);
-    console.log("connected to mongodb");
-  } catch (err) {
-    console.error(err);
-  }
+    console.log("Connected to MongoDB");
 
-  app.listen(process.env.PORT || 4000, () =>
-    console.log("App is running on port", process.env.PORT || 4000),
-  );
+    const loader = new CSVLoader(path.join(__dirname, "data", "salaries.csv"));
+    const docs = await loader.load();
+
+    const embeddings = new OpenAIEmbeddings({
+      batchSize: 512,
+      model: "text-embedding-3-large",
+    });
+    const db = await FaissStore.fromDocuments(docs, embeddings);
+
+    console.log("FaissStore initialized");
+
+    const server = app.listen(process.env.PORT || 4000, () => {
+      console.log("server is up and running");
+    });
+
+    const wss = new WebSocketServer({ server });
+
+    wss.on("connection", (ws) => {
+      console.log("Connection established");
+
+      ws.on("message", async (msg) => {
+        try {
+          const response = await generateResponse(msg.toString(), db);
+
+          ws.send(JSON.stringify({ response, user: "server" }));
+        } catch (err) {
+          console.log(err);
+          ws.send("Error generating response");
+        }
+      });
+
+      ws.on("close", () => {
+        console.log("Connection Closed");
+      });
+
+      ws.on("error", (err) => {
+        console.error("Something went wrong", err);
+      });
+    });
+  } catch (err) {
+    console.error("Error in start function:", err);
+  }
 };
 
 start();

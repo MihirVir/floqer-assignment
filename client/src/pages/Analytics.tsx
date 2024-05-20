@@ -1,21 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/header/header";
 import Table from "../components/table/Table";
 import { GroupByYearData, SecondTableData } from "@/types/TableProps";
 import useFetch from "@/hooks/use-fetch";
 import LineChart from "@/components/chart/LineChart";
-
-const prodUrl = "https://floqer-assignment-1.onrender.com";
-// const devUrl = "http://localhost:8000";
+import ChatApp from "@/components/chat/ChatApp";
+// const prodUrl = "https://floqer-assignment-1.onrender.com";
+const devUrl = "http://localhost:8000";
 
 const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2020);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data: fetchedData } = useFetch<SecondTableData>(
-    `${prodUrl}/${selectedYear}/${pageNumber}`,
+    `${devUrl}/${selectedYear}/${pageNumber}`,
   );
 
-  const { data, loading, error } = useFetch<GroupByYearData>(`${prodUrl}/`);
+  const { data, loading, error } = useFetch<GroupByYearData>(`${devUrl}/`);
+
+  useEffect(() => {
+    // Create WebSocket connection
+    const ws = new WebSocket(`ws://localhost:8000`);
+
+    // Connection opened event listener
+    ws.onopen = () => {
+      console.log("WebSocket connection established");
+    };
+
+    // Connection closed event listener
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    // Clean-up function
+    return () => {
+      ws.close();
+    };
+  }, [selectedYear, pageNumber]);
 
   function handleNextPageChange() {
     if (pageNumber === fetchedData[0].totalPages) {
@@ -43,7 +63,7 @@ const AnalyticsPage = () => {
 
   return (
     <>
-      <div className="bg-white text-black h-screen w-screen">
+      <div className="bg-white text-black h-screen w-screen relative">
         <Header />
         <div className="w-full flex flex-row justify-around">
           <div className="w-1/3">
@@ -73,6 +93,7 @@ const AnalyticsPage = () => {
             )}
           </div>
           <LineChart data={data} />
+          <ChatApp />
         </div>
       </div>
     </>
