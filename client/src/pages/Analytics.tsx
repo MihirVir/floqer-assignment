@@ -12,10 +12,10 @@ const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2020);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data: fetchedData } = useFetch<SecondTableData>(
-    `${devUrl}/${selectedYear}/${pageNumber}`,
+    `${prodUrl}/${selectedYear}/${pageNumber}`,
   );
 
-  const { data, loading, error } = useFetch<GroupByYearData>(`${devUrl}/`);
+  const { data, loading, error } = useFetch<GroupByYearData>(`${prodUrl}/`);
 
   function handleNextPageChange() {
     if (pageNumber === fetchedData[0].totalPages) {
