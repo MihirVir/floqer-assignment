@@ -17,26 +17,6 @@ const AnalyticsPage = () => {
 
   const { data, loading, error } = useFetch<GroupByYearData>(`${prodUrl}/`);
 
-  useEffect(() => {
-    // Create WebSocket connection
-    const ws = new WebSocket(`ws://localhost:8000`);
-
-    // Connection opened event listener
-    ws.onopen = () => {
-      console.log("WebSocket connection established");
-    };
-
-    // Connection closed event listener
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
-
-    // Clean-up function
-    return () => {
-      ws.close();
-    };
-  }, [selectedYear, pageNumber]);
-
   function handleNextPageChange() {
     if (pageNumber === fetchedData[0].totalPages) {
       setPageNumber(fetchedData[0].totalPages);
