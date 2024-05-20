@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "../components/header/header";
 import Table from "../components/table/Table";
 import { GroupByYearData, SecondTableData } from "@/types/TableProps";
