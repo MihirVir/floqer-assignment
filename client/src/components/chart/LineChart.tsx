@@ -28,10 +28,10 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
           {
             label: "Total Jobs",
             data: data.map((i) => i.totalJobs),
-            fill: false,
-            borderColor: "rgb(75, 192, 192)",
+            fill: true,
+            borderColor: "#fff",
             tension: 0.1,
-            point: false,
+            point: true,
           },
         ],
       });

@@ -34,6 +34,22 @@ export const getAggregatedJobTitles = async (req: Request, res: Response) => {
   const skip = (parseInt(page) - 1) * PAGE_SIZE;
 
   try {
+    const jobTitlesCount = await Salary.aggregate([
+      { $match: { work_year: parseInt(year) } },
+      {
+        $group: {
+          _id: "$job_title",
+          totalJobs: { $sum: 1 },
+        },
+      },
+      {
+        $count: "totalJobTitles",
+      },
+    ]);
+
+    const totalJobTitles = jobTitlesCount[0]?.totalJobTitles || 0;
+    const totalPages = Math.ceil(totalJobTitles / PAGE_SIZE);
+
     const jobTitles = await Salary.aggregate([
       { $match: { work_year: parseInt(year) } },
       {
@@ -51,7 +67,7 @@ export const getAggregatedJobTitles = async (req: Request, res: Response) => {
       throw new NotFoundError();
     }
 
-    res.send(jobTitles);
+    res.send([{ jobTitles, totalPages }]);
   } catch (err) {
     console.log("error", err);
     res.status(500).send("Internal server error");
