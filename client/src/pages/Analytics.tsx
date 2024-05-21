@@ -5,17 +5,17 @@ import { GroupByYearData, SecondTableData } from "@/types/TableProps";
 import useFetch from "@/hooks/use-fetch";
 import LineChart from "@/components/chart/LineChart";
 import ChatApp from "@/components/chat/ChatApp";
-const prodUrl = "https://floqer-assignment-1.onrender.com";
-// const devUrl = "http://localhost:8000";
+// const prodUrl = "https://floqer-assignment-1.onrender.com";
+const devUrl = "http://localhost:8000";
 
 const AnalyticsPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(2020);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { data: fetchedData } = useFetch<SecondTableData>(
-    `${prodUrl}/${selectedYear}/${pageNumber}`,
+    `${devUrl}/${selectedYear}/${pageNumber}`,
   );
 
-  const { data, loading, error } = useFetch<GroupByYearData>(`${prodUrl}/`);
+  const { data, loading, error } = useFetch<GroupByYearData>(`${devUrl}/`);
 
   function handleNextPageChange() {
     if (pageNumber === fetchedData[0].totalPages) {
