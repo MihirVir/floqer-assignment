@@ -1,7 +1,5 @@
-import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
 import { OpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { FaissStore } from "@langchain/community/vectorstores/faiss";
-import path from "path";
 
 async function retrieve(query: string, db: FaissStore) {
   try {
