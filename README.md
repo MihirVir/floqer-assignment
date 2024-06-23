@@ -1,4 +1,4 @@
-# Floqer Assignment
+# Langchain data insights
 
 ## Installation Guide
 
